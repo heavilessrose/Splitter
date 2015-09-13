@@ -32,6 +32,13 @@
                         <action selector="menuStatusClicked:" target="Voe-Tx-rLC" id="vdq-qD-PnO"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="eyd-dd-2sq"/>
+                <menuItem title="Quit" tag="999" id="520-es-N56">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuStatusClicked:" target="Voe-Tx-rLC" id="OeH-KQ-mSc"/>
+                    </connections>
+                </menuItem>
             </items>
             <point key="canvasLocation" x="118" y="-123.5"/>
         </menu>

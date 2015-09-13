@@ -33,6 +33,9 @@
   [self.statusItem setImage:[NSImage imageNamed:@"StatusBarButtonImage"]];
   [self.statusItem setHighlightMode:YES];
   
+  [self.menuStatus itemWithTag:1].title = @"Half Left \t⌥⌘←";
+  [self.menuStatus itemWithTag:2].title = @"Half Right \t⌥⌘→";
+  
   [NSEvent addGlobalMonitorForEventsMatchingMask:(NSKeyDownMask) handler:^(NSEvent *event) {
     if ((event.modifierFlags & NSCommandKeyMask) && (event.modifierFlags & NSAlternateKeyMask)) {
       if (event.keyCode == 0x7B) {
@@ -55,8 +58,10 @@
   NSMenuItem *item = (NSMenuItem *)sender;
   if (item.tag == 1) {
     [self moveWindowToHalfLeft];
-  } else {
+  } else if (item.tag == 2) {
     [self moveWindowToHalfRight];
+  } else if (item.tag == 999) {
+    [[NSApplication sharedApplication] terminate:self];
   }
 }
 
