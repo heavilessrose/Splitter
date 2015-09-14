@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="KJSelectSizeWC1">
+            <connections>
+                <outlet property="vContainter" destination="XBo-Xr-Vlt" id="Djg-Cl-Doh"/>
+                <outlet property="window" destination="jdo-R8-pMl" id="nir-qP-hza"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="jdo-R8-pMl" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES" HUD="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="75" y="104" width="480" height="352"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <value key="minSize" type="size" width="480" height="352"/>
+            <value key="maxSize" type="size" width="480" height="352"/>
+            <view key="contentView" id="O2e-G5-m6f">
+                <rect key="frame" x="0.0" y="1" width="480" height="352"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="XBo-Xr-Vlt">
+                        <rect key="frame" x="20" y="20" width="440" height="312"/>
+                    </customView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="XBo-Xr-Vlt" secondAttribute="trailing" constant="20" id="0YG-Os-T8Q"/>
+                    <constraint firstItem="XBo-Xr-Vlt" firstAttribute="leading" secondItem="O2e-G5-m6f" secondAttribute="leading" constant="20" id="FjX-SC-Ml6"/>
+                    <constraint firstItem="XBo-Xr-Vlt" firstAttribute="top" secondItem="O2e-G5-m6f" secondAttribute="top" constant="20" id="Ndq-eC-AbB"/>
+                    <constraint firstAttribute="bottom" secondItem="XBo-Xr-Vlt" secondAttribute="bottom" constant="20" id="WGe-rg-TKb"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="u8K-OO-3de"/>
+            </connections>
+            <point key="canvasLocation" x="195" y="251"/>
+        </window>
+    </objects>
+</document>

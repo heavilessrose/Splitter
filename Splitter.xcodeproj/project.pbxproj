@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		BA6A4E0D1BA57103008F9288 /* KJAccessibilityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6A4E0C1BA57103008F9288 /* KJAccessibilityElement.m */; };
+		BA6A4E111BA5C8E1008F9288 /* KJSelectSizeWC1.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6A4E0F1BA5C8E1008F9288 /* KJSelectSizeWC1.m */; };
+		BA6A4E121BA5C8E1008F9288 /* KJSelectSizeWC1.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6A4E101BA5C8E1008F9288 /* KJSelectSizeWC1.xib */; };
+		BA6A4E161BA5D833008F9288 /* KJSelectSizeWC2.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6A4E141BA5D833008F9288 /* KJSelectSizeWC2.m */; };
+		BA6A4E171BA5D833008F9288 /* KJSelectSizeWC2.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6A4E151BA5D833008F9288 /* KJSelectSizeWC2.xib */; };
 		BAD9D0351BA41DC90076803A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD9D0341BA41DC90076803A /* AppDelegate.m */; };
 		BAD9D0371BA41DC90076803A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD9D0361BA41DC90076803A /* main.m */; };
 		BAD9D0391BA41DC90076803A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAD9D0381BA41DC90076803A /* Images.xcassets */; };
@@ -28,6 +32,12 @@
 /* Begin PBXFileReference section */
 		BA6A4E0B1BA57103008F9288 /* KJAccessibilityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJAccessibilityElement.h; sourceTree = "<group>"; };
 		BA6A4E0C1BA57103008F9288 /* KJAccessibilityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJAccessibilityElement.m; sourceTree = "<group>"; };
+		BA6A4E0E1BA5C8E1008F9288 /* KJSelectSizeWC1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJSelectSizeWC1.h; sourceTree = "<group>"; };
+		BA6A4E0F1BA5C8E1008F9288 /* KJSelectSizeWC1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJSelectSizeWC1.m; sourceTree = "<group>"; };
+		BA6A4E101BA5C8E1008F9288 /* KJSelectSizeWC1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KJSelectSizeWC1.xib; sourceTree = "<group>"; };
+		BA6A4E131BA5D833008F9288 /* KJSelectSizeWC2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJSelectSizeWC2.h; sourceTree = "<group>"; };
+		BA6A4E141BA5D833008F9288 /* KJSelectSizeWC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJSelectSizeWC2.m; sourceTree = "<group>"; };
+		BA6A4E151BA5D833008F9288 /* KJSelectSizeWC2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KJSelectSizeWC2.xib; sourceTree = "<group>"; };
 		BAD9D02E1BA41DC90076803A /* Splitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Splitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAD9D0321BA41DC90076803A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAD9D0331BA41DC90076803A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -83,6 +93,12 @@
 				BAD9D0341BA41DC90076803A /* AppDelegate.m */,
 				BA6A4E0B1BA57103008F9288 /* KJAccessibilityElement.h */,
 				BA6A4E0C1BA57103008F9288 /* KJAccessibilityElement.m */,
+				BA6A4E0E1BA5C8E1008F9288 /* KJSelectSizeWC1.h */,
+				BA6A4E0F1BA5C8E1008F9288 /* KJSelectSizeWC1.m */,
+				BA6A4E101BA5C8E1008F9288 /* KJSelectSizeWC1.xib */,
+				BA6A4E131BA5D833008F9288 /* KJSelectSizeWC2.h */,
+				BA6A4E141BA5D833008F9288 /* KJSelectSizeWC2.m */,
+				BA6A4E151BA5D833008F9288 /* KJSelectSizeWC2.xib */,
 				BAD9D0381BA41DC90076803A /* Images.xcassets */,
 				BAD9D03A1BA41DC90076803A /* MainMenu.xib */,
 				BAD9D0311BA41DC90076803A /* Supporting Files */,
@@ -196,6 +212,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6A4E171BA5D833008F9288 /* KJSelectSizeWC2.xib in Resources */,
+				BA6A4E121BA5C8E1008F9288 /* KJSelectSizeWC1.xib in Resources */,
 				BAD9D0391BA41DC90076803A /* Images.xcassets in Resources */,
 				BAD9D03C1BA41DC90076803A /* MainMenu.xib in Resources */,
 			);
@@ -218,6 +236,8 @@
 				BAD9D0371BA41DC90076803A /* main.m in Sources */,
 				BAD9D0351BA41DC90076803A /* AppDelegate.m in Sources */,
 				BA6A4E0D1BA57103008F9288 /* KJAccessibilityElement.m in Sources */,
+				BA6A4E161BA5D833008F9288 /* KJSelectSizeWC2.m in Sources */,
+				BA6A4E111BA5C8E1008F9288 /* KJSelectSizeWC1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
