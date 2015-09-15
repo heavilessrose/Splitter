@@ -9,14 +9,14 @@
 #import "AppDelegate.h"
 #import <Carbon/Carbon.h>
 #import "KJAccessibilityElement.h"
-#import "KJSelectSizeWC1.h"
 #import "KJSelectSizeWC2.h"
+
+static int NumberOfCells = 8;
 
 @interface AppDelegate () <KJSelectSizeWC2Delegate> {
   KJAccessibilityElement *_lastElement;
 }
 
-@property (nonatomic, strong) KJSelectSizeWC1 *selectSizeWC1;
 @property (nonatomic, strong) KJSelectSizeWC2 *selectSizeWC2;
 
 @end
@@ -32,9 +32,9 @@
   }
   
   // init windows
-  self.selectSizeWC1 = [[KJSelectSizeWC1 alloc] initWithWindowNibName:@"KJSelectSizeWC1"];
   self.selectSizeWC2 = [[KJSelectSizeWC2 alloc] initWithWindowNibName:@"KJSelectSizeWC2"];
   self.selectSizeWC2.delegate = self;
+  self.selectSizeWC2.numberOfCells = NumberOfCells;
   
   // setup status bar icon
   self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
@@ -85,19 +85,32 @@
 
 - (void)moveWindowToHalfLeft {
   CGRect screen = [NSScreen mainScreen].frame;
-  CGRect leftFrame = CGRectMake(0, 0, screen.size.width/2, screen.size.height);
+  CGRect leftFrame = CGRectMake(screen.origin.x + 0, screen.origin.y + 0, screen.size.width/2, screen.size.height);
   [self moveFrontMostWindowToFrame:leftFrame];
   _lastElement = nil;
 }
 
 - (void)moveWindowToHalfRight {
   CGRect screen = [NSScreen mainScreen].frame;
-  CGRect rightFrame = CGRectMake(screen.size.width/2, 0, screen.size.width/2, screen.size.height);
+  CGRect rightFrame = CGRectMake(screen.origin.x + screen.size.width/2, screen.origin.y, screen.size.width/2, screen.size.height);
   [self moveFrontMostWindowToFrame:rightFrame];
   _lastElement = nil;
 }
 
 - (void)moveFrontMostWindowToFrame:(CGRect)frame {
+  
+  NSArray *screens = [NSScreen screens];
+  NSScreen *zeroScreen = [[NSScreen screens] objectAtIndex:0];
+  for (NSScreen *screen in screens) {
+    if (screen.frame.origin.x == 0 && screen.frame.origin.y == 0) {
+      zeroScreen = screen;
+    }
+  }
+  
+  CGFloat x = frame.origin.x;
+  CGFloat y = [NSScreen mainScreen].frame.size.height - frame.origin.y - frame.size.height + (zeroScreen.frame.size.height - [NSScreen mainScreen].frame.size.height);
+  frame = CGRectMake(x, y, frame.size.width, frame.size.height);
+  
   KJAccessibilityElement *frontMostWindow = nil;
   if (_lastElement) {
     frontMostWindow = _lastElement;
@@ -109,14 +122,14 @@
     AXValueRef size = AXValueCreate(kAXValueCGSizeType, (const void *)&frame.size);
     [frontMostWindow setValue:origin forAttribute:kAXPositionAttribute];
     [frontMostWindow setValue:size forAttribute:kAXSizeAttribute];
-    [frontMostWindow setValue:(AXValueRef)kCFBooleanTrue forAttribute:kAXMainAttribute];
-    [frontMostWindow setValue:(AXValueRef)kCFBooleanTrue forAttribute:kAXFocusedAttribute];
+    CFRelease(origin);
+    CFRelease(size);
   }
 }
 
 - (void)showCustomResizeWindow {
   _lastElement = [KJAccessibilityElement frontMostWindowElement];
-  [self.selectSizeWC2.window center];
+  [self.selectSizeWC2 setNumberOfCells:NumberOfCells];
   [self.selectSizeWC2 refreshUI];
   [self.selectSizeWC2 showWindow:nil];
   [self.selectSizeWC2.window setLevel:NSFloatingWindowLevel];
@@ -129,13 +142,14 @@
 - (void)selectSizeWC2:(KJSelectSizeWC2 *)windowController didSelectRect:(CGRect)rect {
   [self.selectSizeWC2 close];
   if (rect.size.width > 0 && rect.size.height > 0) {
-    CGFloat cellWidth = [NSScreen mainScreen].frame.size.width / 6.0;
-    CGFloat cellHeight = [NSScreen mainScreen].frame.size.height / 6.0;
+    CGRect screen = [NSScreen mainScreen].frame;
+    CGFloat cellWidth = [NSScreen mainScreen].frame.size.width / NumberOfCells;
+    CGFloat cellHeight = [NSScreen mainScreen].frame.size.height / NumberOfCells;
     CGFloat x = rect.origin.x * cellWidth;
-    CGFloat y = (6 - rect.origin.y - rect.size.height) * cellHeight;
+    CGFloat y = rect.origin.y * cellHeight;
     CGFloat width = rect.size.width * cellWidth;
     CGFloat height = rect.size.height * cellHeight;
-    [self moveFrontMostWindowToFrame:CGRectMake(x, y, width, height)];
+    [self moveFrontMostWindowToFrame:CGRectMake(screen.origin.x + x, screen.origin.y + y, width, height)];
   }
 }
 
