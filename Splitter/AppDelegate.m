@@ -133,8 +133,9 @@ static int NumberOfCells = 8;
   [self.selectSizeWC2 refreshUI];
   [self.selectSizeWC2 showWindow:nil];
   [self.selectSizeWC2.window setLevel:NSFloatingWindowLevel];
-  [self.selectSizeWC2.window makeKeyWindow];
-  [self.selectSizeWC2.window becomeFirstResponder];
+  [NSApp activateIgnoringOtherApps:YES];
+ // [self.selectSizeWC2.window makeKeyWindow];
+ // [self.selectSizeWC2.window becomeFirstResponder];
 }
 
 #pragma mark - KJSelectSizeWC2 Delegate
