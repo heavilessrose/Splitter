@@ -1,0 +1,21 @@
+//
+//  Splitter-PrefixHeader.pch
+//  Splitter
+//
+//  Created by Kenji on 20/9/15.
+//  Copyright © 2015 Kenji. All rights reserved.
+//
+
+#ifndef Splitter_PrefixHeader_pch
+#define Splitter_PrefixHeader_pch
+
+// UN-COMMENT CONFIG BELOW FOR PRODUCT
+#define CONFIG_DEVELOPMENT 1
+
+#ifdef __OBJC__
+
+#import "KJUtils.h"
+
+#endif
+
+#endif /* Splitter_PrefixHeader_pch */

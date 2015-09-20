@@ -22,7 +22,10 @@ static int CellPadding  = 4;
 
 - (void)setNumberOfCells:(NSInteger)numberOfCells {
   _numberOfCells = numberOfCells;
-  _cellsList = nil;
+  if (_cellsList.count > 0) {
+    [_cellsList makeObjectsPerformSelector:@selector(removeFromSuperview) withObject:nil];
+  }
+  _cellsList = @[];
 }
 
 - (BOOL)becomeFirstResponder {

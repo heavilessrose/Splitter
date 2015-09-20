@@ -10,6 +10,7 @@
 #import <Carbon/Carbon.h>
 #import "KJAccessibilityElement.h"
 #import "KJSelectSizeWC2.h"
+#import "KJPreferencesWC.h"
 
 static int NumberOfCells = 8;
 
@@ -18,6 +19,7 @@ static int NumberOfCells = 8;
 }
 
 @property (nonatomic, strong) KJSelectSizeWC2 *selectSizeWC2;
+@property (nonatomic, strong) KJPreferencesWC *preferencesWC;
 
 @end
 
@@ -25,16 +27,19 @@ static int NumberOfCells = 8;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   
-  // check accessibility trusted
-  NSDictionary *options = @{(__bridge NSString *)kAXTrustedCheckOptionPrompt : @(YES)};
-  if (!AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options)) {
-    NSLog(@"don't have permission. warn user");
-  }
+  // request accessibility
+  [self requestAccessibilityPermissonWithPrompt:YES];
   
   // init windows
   self.selectSizeWC2 = [[KJSelectSizeWC2 alloc] initWithWindowNibName:@"KJSelectSizeWC2"];
   self.selectSizeWC2.delegate = self;
   self.selectSizeWC2.numberOfCells = NumberOfCells;
+  
+  self.preferencesWC = [[KJPreferencesWC alloc] initWithWindowNibName:@"KJPreferencesWC"];
+  self.preferencesWC.window.alphaValue = 0.0;
+  [self.preferencesWC showWindow:nil];
+  [self.preferencesWC close];
+  self.preferencesWC.window.alphaValue = 1.0;
   
   // setup status bar icon
   self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
@@ -46,7 +51,41 @@ static int NumberOfCells = 8;
   [self.menuStatus itemWithTag:1].title = @"Half Left \t⌥⌘←";
   [self.menuStatus itemWithTag:2].title = @"Half Right \t⌥⌘→";
   
-  // setup event monitor
+  // auto start with system
+#ifdef CONFIG_DEVELOPMENT
+  [KJUtils disableLoginItemForBundle:[NSBundle mainBundle]];
+#else
+  BOOL autoStart = [[KJUtils getSettingForKey:kSettingsAutoStartWithSystem defaultValue:@(YES)] boolValue];
+  if (autoStart) {
+    [KJUtils enableLoginItemForBundle:[NSBundle mainBundle]];
+  } else {
+    [KJUtils disableLoginItemForBundle:[NSBundle mainBundle]];
+  }
+#endif
+}
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
+  // Insert code here to tear down your application
+}
+
+- (void)requestAccessibilityPermissonWithPrompt:(BOOL)isPrompt {
+  if (isPrompt) {
+     NSDictionary *options = @{(__bridge NSString *)kAXTrustedCheckOptionPrompt : @(YES)};
+    if (!AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options)) {
+      [self performSelector:@selector(requestAccessibilityPermissonWithPrompt:) withObject:nil afterDelay:5.0];
+    } else {
+      [self setupEventsMonitor];
+    }
+  } else {
+    if (!AXIsProcessTrustedWithOptions(NULL)) {
+      [self performSelector:@selector(requestAccessibilityPermissonWithPrompt:) withObject:nil afterDelay:5.0];
+    } else {
+      [self setupEventsMonitor];
+    }
+  }
+}
+
+- (void)setupEventsMonitor {
   [NSEvent addGlobalMonitorForEventsMatchingMask:(NSKeyDownMask) handler:^(NSEvent *event) {
     if ((event.modifierFlags & NSCommandKeyMask) && (event.modifierFlags & NSAlternateKeyMask)) {
       if (event.keyCode == 0x7B) {
@@ -62,10 +101,6 @@ static int NumberOfCells = 8;
   }];
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-  // Insert code here to tear down your application
-}
-
 #pragma mark - Menu Status
 
 - (IBAction)menuStatusClicked:(id)sender {
@@ -76,6 +111,8 @@ static int NumberOfCells = 8;
     [self moveWindowToHalfRight];
   } else if (item.tag == 3) {
     [self showCustomResizeWindow];
+  } else if (item.tag == 900) {
+    [self showPreferencesWindow];
   } else if (item.tag == 999) {
     [[NSApplication sharedApplication] terminate:self];
   }
@@ -128,14 +165,22 @@ static int NumberOfCells = 8;
 }
 
 - (void)showCustomResizeWindow {
+  NumberOfCells = [[KJUtils getSettingForKey:kSettingsNumberOfCells defaultValue:@(6)] intValue];
   _lastElement = [KJAccessibilityElement frontMostWindowElement];
   [self.selectSizeWC2 setNumberOfCells:NumberOfCells];
   [self.selectSizeWC2 refreshUI];
+  [self.preferencesWC.window center];
   [self.selectSizeWC2 showWindow:nil];
   [self.selectSizeWC2.window setLevel:NSFloatingWindowLevel];
   [NSApp activateIgnoringOtherApps:YES];
- // [self.selectSizeWC2.window makeKeyWindow];
- // [self.selectSizeWC2.window becomeFirstResponder];
+}
+
+- (void)showPreferencesWindow {
+  [self.preferencesWC reloadData];
+  [self.preferencesWC.window center];
+  [self.preferencesWC showWindow:nil];
+  [self.preferencesWC.window setLevel:NSFloatingWindowLevel];
+  [NSApp activateIgnoringOtherApps:YES];
 }
 
 #pragma mark - KJSelectSizeWC2 Delegate

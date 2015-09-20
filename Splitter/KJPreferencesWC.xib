@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="KJPreferencesWC">
+            <connections>
+                <outlet property="cbStartWithSystem" destination="Zk4-jj-Ikc" id="FVd-dq-g08"/>
+                <outlet property="stepRowsAndCols" destination="f9n-3b-pV1" id="Zrc-fX-a7O"/>
+                <outlet property="tfRowsAndCols" destination="ZOJ-c1-vT7" id="uqr-N8-eHg"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <value key="minSize" type="size" width="480" height="270"/>
+            <value key="maxSize" type="size" width="480" height="270"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Zk4-jj-Ikc">
+                        <rect key="frame" x="146" y="172" width="188" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="9Ed-A0-Kpa"/>
+                        </constraints>
+                        <buttonCell key="cell" type="check" title="Auto start with the System" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xz4-EC-bH1">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="checkBoxValueChanged:" target="-2" id="h15-2w-aMl"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0BU-An-ZMP">
+                        <rect key="frame" x="146" y="137" width="130" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="126" id="C43-jh-P57"/>
+                            <constraint firstAttribute="height" constant="17" id="rFe-b3-JKS"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Rows and Columns:" id="dNi-Cf-vNx">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZOJ-c1-vT7">
+                        <rect key="frame" x="282" y="132" width="32" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="A7z-sN-pQO"/>
+                            <constraint firstAttribute="width" constant="32" id="a5j-ab-kHN"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" title="4" drawsBackground="YES" id="kxU-bv-Efz">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="w9x-Wb-QRH">
+                                <real key="minimum" value="4"/>
+                                <real key="maximum" value="12"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="qU0-lB-Arb" name="value" keyPath="selection.intValue" id="uxc-il-1BZ"/>
+                            <outlet property="delegate" destination="-2" id="x0P-dY-jMQ"/>
+                        </connections>
+                    </textField>
+                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sWv-XZ-TT3">
+                        <rect key="frame" x="317" y="129" width="19" height="27"/>
+                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="rKg-ei-uOn"/>
+                        <connections>
+                            <action selector="stepperClicked:" target="-2" id="Yxh-wq-vX2"/>
+                            <binding destination="qU0-lB-Arb" name="value" keyPath="selection.intValue" id="J4N-pR-NJb"/>
+                        </connections>
+                    </stepper>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K96-h4-SXH">
+                        <rect key="frame" x="384" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="8aK-LP-JSj"/>
+                            <constraint firstAttribute="height" constant="21" id="NKn-vi-HUe"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8EO-xn-Fn3">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="btnOkClicked:" target="-2" id="GON-Ru-KPF"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cBr-Jt-Q5j">
+                        <rect key="frame" x="302" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="jLz-l2-gz4"/>
+                            <constraint firstAttribute="width" constant="70" id="sr6-FG-3q3"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hlx-oe-YEC">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="btnCancelClicked:" target="-2" id="m1q-Tb-TGZ"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="K96-h4-SXH" secondAttribute="bottom" constant="20" id="8KB-D0-7jF"/>
+                    <constraint firstAttribute="trailing" secondItem="K96-h4-SXH" secondAttribute="trailing" constant="20" id="J4o-J5-AXO"/>
+                    <constraint firstItem="K96-h4-SXH" firstAttribute="leading" secondItem="cBr-Jt-Q5j" secondAttribute="trailing" constant="12" id="Kaf-cz-y3a"/>
+                    <constraint firstItem="sWv-XZ-TT3" firstAttribute="centerY" secondItem="ZOJ-c1-vT7" secondAttribute="centerY" id="NVj-hC-iSS"/>
+                    <constraint firstItem="cBr-Jt-Q5j" firstAttribute="centerY" secondItem="K96-h4-SXH" secondAttribute="centerY" id="OCI-IG-awi"/>
+                    <constraint firstItem="0BU-An-ZMP" firstAttribute="leading" secondItem="Zk4-jj-Ikc" secondAttribute="leading" id="WLb-hG-EXW"/>
+                    <constraint firstItem="sWv-XZ-TT3" firstAttribute="leading" secondItem="ZOJ-c1-vT7" secondAttribute="trailing" constant="6" id="aGZ-o5-PZN"/>
+                    <constraint firstItem="0BU-An-ZMP" firstAttribute="top" secondItem="Zk4-jj-Ikc" secondAttribute="bottom" constant="20" id="ezu-Jn-4sF"/>
+                    <constraint firstItem="ZOJ-c1-vT7" firstAttribute="top" secondItem="0BU-An-ZMP" secondAttribute="top" id="hTj-T0-Yy2"/>
+                    <constraint firstItem="ZOJ-c1-vT7" firstAttribute="leading" secondItem="0BU-An-ZMP" secondAttribute="trailing" constant="8" id="k8L-o2-LyM"/>
+                    <constraint firstItem="Zk4-jj-Ikc" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="148" id="tmn-ET-EQN"/>
+                    <constraint firstItem="Zk4-jj-Ikc" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="82" id="wGe-R6-OsR"/>
+                    <constraint firstAttribute="trailing" secondItem="Zk4-jj-Ikc" secondAttribute="trailing" constant="148" id="xHl-kh-Rs7"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="342" y="230"/>
+        </window>
+        <objectController id="qU0-lB-Arb">
+            <connections>
+                <binding destination="f9n-3b-pV1" name="contentObject" keyPath="self" id="3JU-9a-AIe"/>
+            </connections>
+        </objectController>
+        <customObject id="f9n-3b-pV1" customClass="NSStepper"/>
+    </objects>
+</document>
