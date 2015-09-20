@@ -8,9 +8,13 @@
 
 #import "KJSelectSizeWC2.h"
 
-static int CellPadding  = 4;
+static int CellPadding = 4;
 
-@interface KJSelectSizeWC2 ()
+@interface KJSelectSizeWC2 () {
+  CGColorRef _cellNormalColor;
+  CGColorRef _cellSelectedColor;
+  CGColorRef _cellBorderColor;
+}
 
 @property (nonatomic, strong) NSArray *cellsList;
 @property (nonatomic, assign) NSPoint firstPoint;
@@ -36,7 +40,11 @@ static int CellPadding  = 4;
   [super windowDidLoad];
   
   self.window.alphaValue = 0.9;
-  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.2 green:0.2 blue:0.2 alpha:0.5];
+  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.2 green:0.2 blue:0.2 alpha:0.6];
+  
+  _cellNormalColor = CGColorCreateCopy([KJUtils colorFromHexadecimalValue:@"2A2728"].CGColor);
+  _cellSelectedColor = CGColorCreateCopy([KJUtils colorFromHexadecimalValue:@"1569C7"].CGColor);
+  _cellBorderColor = CGColorCreateCopy([KJUtils colorFromHexadecimalValue:@"AEAEAE"].CGColor);
 }
 
 - (void)refreshUI {
@@ -48,13 +56,16 @@ static int CellPadding  = 4;
   if (self.cellsList.count == 0) {
     
     CGRect screen = [NSScreen mainScreen].frame;
+    float ratio = screen.size.height / screen.size.width;
+    if (ratio < (3.0 / 5.0) && screen.size.width > screen.size.height) { ratio = 3.0 / 4.0; }
+    if (ratio < (5.0 / 3.0) && screen.size.width < screen.size.height) { ratio = 4.0 / 3.0; }
     CGFloat width = 480;
-    CGFloat height = 440 * screen.size.height / screen.size.width + 40;
+    CGFloat height = 440 * ratio + 40;
     [self.window setFrame:NSMakeRect(screen.origin.x + (screen.size.width - width)/2, screen.origin.y + (screen.size.height - height)/2, width, height) display:YES];
     
     NSMutableArray *list = [[NSMutableArray alloc] init];
-    float itemWidth = (self.vContainer.frame.size.width - (self.numberOfCells-1)*CellPadding) / self.numberOfCells;
-    float itemHeight = (self.vContainer.frame.size.height - (self.numberOfCells-1)*CellPadding) / self.numberOfCells;
+    float itemWidth = (self.vContainer.frame.size.width - (self.numberOfCells)*CellPadding) / self.numberOfCells;
+    float itemHeight = (self.vContainer.frame.size.height - (self.numberOfCells)*CellPadding) / self.numberOfCells;
     int n = (int)(self.numberOfCells * self.numberOfCells);
     for (int i = 0; i < n; i++) {
       float xOffset = (i%self.numberOfCells > 0 ? (i%self.numberOfCells) * CellPadding : 0);
@@ -62,9 +73,12 @@ static int CellPadding  = 4;
       NSView *view = [[NSView alloc] initWithFrame:CGRectMake(i%self.numberOfCells * itemWidth + xOffset,
                                                               i/self.numberOfCells * itemHeight + yOffset,
                                                               itemWidth, itemHeight)];
-      view.layer = [[CALayer alloc] init];
       view.wantsLayer = YES;
-      view.layer.backgroundColor = CGColorCreateGenericRGB(50.0/255, 50.0/255, 153.0/255, 1.0);
+      view.layer = [[CALayer alloc] init];
+      view.layer.cornerRadius = 3.0f;
+      view.layer.borderWidth = 1.0;
+      view.layer.borderColor = _cellBorderColor;
+      view.layer.backgroundColor = _cellNormalColor;
       [self.vContainer addSubview:view];
       [list addObject:view];
     }
@@ -74,9 +88,9 @@ static int CellPadding  = 4;
     CGRect selectRect = [self getRectangleFromPoint1:self.firstPoint andPoint2:self.lastPoint];
     for (NSView *view in self.cellsList) {
       if (CGRectIntersectsRect(selectRect, view.frame)) {
-        view.layer.backgroundColor = CGColorCreateGenericRGB(20.0/255, 20.0/255, 61.0/255, 1.0);
+        view.layer.backgroundColor = _cellSelectedColor;
       } else {
-        view.layer.backgroundColor = CGColorCreateGenericRGB(50.0/255, 50.0/255, 153.0/255, 1.0);
+        view.layer.backgroundColor = _cellNormalColor;
       }
     }
   }
@@ -100,6 +114,8 @@ static int CellPadding  = 4;
   if (self.delegate && [self.delegate respondsToSelector:@selector(selectSizeWC2:didSelectRect:)]) {
     [self.delegate selectSizeWC2:self didSelectRect:rect];
   }
+  self.firstPoint = NSMakePoint(-1, -1);
+  self.lastPoint = NSMakePoint(-1, -1);
 }
 
 - (CGRect)getRectangleFromPoint1:(NSPoint)p1 andPoint2:(NSPoint)p2 {
@@ -144,8 +160,8 @@ static int CellPadding  = 4;
     return CGRectZero;
   }
   
-  float itemWidth = (self.vContainer.frame.size.width - (self.numberOfCells-1)*CellPadding) / self.numberOfCells;
-  float itemHeight = (self.vContainer.frame.size.height - (self.numberOfCells-1)*CellPadding) / self.numberOfCells;
+  float itemWidth = (self.vContainer.frame.size.width - (self.numberOfCells)*CellPadding) / self.numberOfCells;
+  float itemHeight = (self.vContainer.frame.size.height - (self.numberOfCells)*CellPadding) / self.numberOfCells;
   int x = ((int)smallest.x) / itemWidth;
   int y = ((int)smallest.y) / itemHeight;
   int width = ((int)(largest.x - smallest.x)) / itemWidth + 1;

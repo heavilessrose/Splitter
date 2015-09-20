@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
 FOUNDATION_EXPORT NSString * const kSettingsAutoStartWithSystem;
 FOUNDATION_EXPORT NSString * const kSettingsNumberOfCells;
@@ -19,5 +20,7 @@ FOUNDATION_EXPORT NSString * const kSettingsNumberOfCells;
 + (BOOL)isLoginItemEnabledForBundle:(NSBundle *)bundle;
 + (void)enableLoginItemForBundle:(NSBundle *)bundle;
 + (void)disableLoginItemForBundle:(NSBundle *)bundle;
+
++ (NSColor *)colorFromHexadecimalValue:(NSString *)hex;
 
 @end

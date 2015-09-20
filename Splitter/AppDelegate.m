@@ -161,6 +161,7 @@ static int NumberOfCells = 8;
     [frontMostWindow setValue:size forAttribute:kAXSizeAttribute];
     CFRelease(origin);
     CFRelease(size);
+    [KJAccessibilityElement focusWindow:frontMostWindow.underlyingElement];
   }
 }
 

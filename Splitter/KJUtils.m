@@ -126,4 +126,20 @@ NSString * const kSettingsNumberOfCells         = @"splitter_settings_number_of_
   }
 }
 
++ (NSColor *)colorFromHexadecimalValue:(NSString *)hex {
+  
+  if ([hex hasPrefix:@"#"]) {
+    hex = [hex substringWithRange:NSMakeRange(1, [hex length] - 1)];
+  }
+  
+  unsigned int colorCode = 0;
+  
+  if (hex) {
+    NSScanner *scanner = [NSScanner scannerWithString:hex];
+    (void)[scanner scanHexInt:&colorCode];
+  }
+  
+  return [NSColor colorWithDeviceRed:((colorCode>>16)&0xFF)/255.0 green:((colorCode>>8)&0xFF)/255.0 blue:((colorCode)&0xFF)/255.0 alpha:1.0];
+}
+
 @end
