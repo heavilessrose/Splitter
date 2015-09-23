@@ -7,6 +7,7 @@
 //
 
 #import "KJAccessibilityElement.h"
+#import <AppKit/AppKit.h>
 
 @implementation KJAccessibilityElement
 
@@ -37,6 +38,28 @@
   }
   
   return frontMostWindow;
+}
+
++ (BOOL)focusWindow:(AXUIElementRef)window {
+  BOOL couldFocus = YES;
+  if (AXUIElementSetAttributeValue(window, (CFStringRef)NSAccessibilityMainAttribute, kCFBooleanTrue) != kAXErrorSuccess) {
+    couldFocus = NO;
+  }
+  pid_t focusPID = [KJAccessibilityElement processIdentifierOfUIElement:window];
+  ProcessSerialNumber psn;
+  GetProcessForPID(focusPID, &psn);
+  SetFrontProcessWithOptions(&psn, kSetFrontProcessFrontWindowOnly);
+  return couldFocus;
+}
+
++ (pid_t)processIdentifierOfUIElement:(AXUIElementRef)element {
+  [KJAccessibilityElement systemWideElement];
+  pid_t pid = 0;
+  if (AXUIElementGetPid (element, &pid) == kAXErrorSuccess) {
+    return pid;
+  } else {
+    return 0;
+  }
 }
 
 - (instancetype)init
